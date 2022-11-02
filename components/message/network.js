@@ -20,7 +20,7 @@ router.post('/', (req, res) => {
         .then((fullMessage) => {
             response.success(req, res, fullMessage, 201);
         }).catch((err) => {
-            response.error(req, res, 'Informacion invalida', 400, 'Error en el controlador');
+            response.error(req, res, 'Informacion invalida', 400, err);
         });
 });
 router.patch('/:id', (req, res) => {
@@ -30,6 +30,14 @@ router.patch('/:id', (req, res) => {
         }).catch((err) => {
             response.error(req, res, 'Error interno', 500, err);
         });
-})
+});
+router.delete('/:id', (req, res) => {
+    controller.deleteMessage(req.params.id)
+        .then(() => {
+            response.success(req, res, `Mensaje ${req.params.id} eliminado`, 200);
+        }).catch((err) => {
+            response.error(req, res, 'Error interno', 500, err);
+        });
+});
 
 module.exports = router;

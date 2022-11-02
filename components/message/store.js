@@ -34,10 +34,13 @@ async function updateText(id, message) {
     return updatedMessage;
 }
 
+function removeMessage(id) {
+    return Model.findByIdAndDelete(id);
+}
+
 module.exports = {
     add: addMessage,
     list: getMessages,
-    //get
     updateText: updateText,
-    //delete
+    remove: removeMessage,
 }
