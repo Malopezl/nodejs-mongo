@@ -1,19 +1,22 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-
 const router = require('./network/routes');
+const db = require('./db');
+require('dotenv').config({ path: './.env' });
 
-var app = express();
-/*
-* Si se quisiera utilizar url encoded seria de esta manera:
-* app.use(bodyParser.urlencoded({ extended: false }));
-*/
+/* Conexion a la base de datos */
+db(process.env.DB_CONNECT);
+
+const app = express();
+
+/* Codificacion */
 app.use(bodyParser.json());
 
+/* Se carga el servidor a las rutas para que inicie */
 router(app);
-
 
 app.use('/app', express.static('public'));
 
-app.listen(3000);
-console.log('La aplicacion esta escuchando en http://localhost:3000');
+app.listen(process.env.APP_PORT, () => {
+    console.log(`La aplicacion esta escuchando en http://localhost:${process.env.APP_PORT}`);
+});
