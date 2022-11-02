@@ -15,22 +15,21 @@ console.log('[DB] Conectado con exito');
 
 
 function addMessage(message) {
-    // list.push(message);
     const myMessage = new Model(message);
     myMessage.save();
 }
 
-async function getMessages() {
-    // return list;
-    const messages = await Model.find().select('-__v');
+async function getMessages(filterUser) {
+    let filter = {};
+    if (filterUser !== null) {
+        /* Used RegExp for case-insensitive */
+        filter = { user: new RegExp(filterUser, "i") };
+    }
+    const messages = await Model.find(filter).select('-__v');
     return messages;
 }
 
 async function updateText(id, message) {
-    // const myMessage = await Model.findById(id).select('-__v');
-
-    // myMessage.message = message;
-    // const newMessage = await myMessage.save();
     const updatedMessage = await Model.findByIdAndUpdate(id, { message: message }, { new: true }).select('-__v');
     return updatedMessage;
 }
