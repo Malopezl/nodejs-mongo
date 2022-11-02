@@ -26,10 +26,19 @@ async function getMessages() {
     return messages;
 }
 
+async function updateText(id, message) {
+    // const myMessage = await Model.findById(id).select('-__v');
+
+    // myMessage.message = message;
+    // const newMessage = await myMessage.save();
+    const updatedMessage = await Model.findByIdAndUpdate(id, { message: message }, { new: true }).select('-__v');
+    return updatedMessage;
+}
+
 module.exports = {
     add: addMessage,
     list: getMessages,
     //get
-    //update
+    updateText: updateText,
     //delete
 }

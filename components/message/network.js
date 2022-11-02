@@ -20,5 +20,13 @@ router.post('/', (req, res) => {
             response.error(req, res, 'Informacion invalida', 400, 'Error en el controlador');
         });
 });
+router.patch('/:id', (req, res) => {
+    controller.updateMessage(req.params.id, req.body.message)
+        .then((data) => {
+            response.success(req, res, data, 200);
+        }).catch((err) => {
+            response.error(req, res, 'Error interno', 500, err);
+        });
+})
 
 module.exports = router;
