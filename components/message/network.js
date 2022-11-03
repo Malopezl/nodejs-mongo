@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get('/', (req, res) => {
     /* This is used to filter messages if needed */
-    const filterMessages = req.query.user || null;
+    const filterMessages = req.query.chat || null;
 
     controller.getMessages(filterMessages)
         .then((messageList) => {
@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
         });
 });
 router.post('/', (req, res) => {
-    controller.addMessage(req.body.user, req.body.message)
+    controller.addMessage(req.body.chat, req.body.user, req.body.message)
         .then((fullMessage) => {
             response.success(req, res, fullMessage, 201);
         }).catch((err) => {

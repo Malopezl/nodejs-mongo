@@ -5,22 +5,20 @@ const controller = require('./controller');
 const router = express.Router();
 
 router.post('/', (req, res) => {
-    controller.addUser(req.body.name)
+    controller.addChat(req.body.users)
         .then((data) => {
             response.success(req, res, data, 201);
         }).catch((err) => {
             response.error(req, res, 'Internal error', 500, err);
         });
 });
-router.get('/', (req, res) => {
-    /* This is used to filter messages if needed */
-    const filterUsers = req.query.user || null;
 
-    controller.getUsers(filterUsers)
-        .then((userList) => {
-            response.success(req, res, userList, 201);
+router.get('/:userId', (req, res) => {
+    controller.listChats(req.params.userId)
+        .then((users) => {
+            response.success(req, res, users, 200);
         }).catch((err) => {
-            response.error(req, res, 'Unexpected error', 500, err);
+            response.error(req, res, 'Internal error', 500, err);
         });
 });
 

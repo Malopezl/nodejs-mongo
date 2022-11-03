@@ -5,14 +5,24 @@ function addMessage(message) {
     myMessage.save();
 }
 
-async function getMessages(filterUser) {
-    let filter = {};
-    if (filterUser !== null) {
-        /* Used RegExp for case-insensitive */
-        filter = { user: new RegExp(filterUser, "i") };
-    }
-    const messages = await Model.find(filter).select('-__v');
-    return messages;
+async function getMessages(filterChat) {
+    return new Promise((resolve, reject) => {
+        let filter = {};
+        if (filterChat !== null) {
+            /* Used RegExp for case-insensitive */
+            filter = { chat: filterChat };
+        }
+        Model.find(filter).select('-__v')
+            .populate('user', '-__v')
+            .exec((error, populated) => {
+                if (error) {
+                    reject(error);
+                    return false;
+                }
+
+                resolve(populated);
+            });
+    });
 }
 
 async function updateText(id, message) {
