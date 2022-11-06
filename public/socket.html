@@ -1,0 +1,21 @@
+<html>
+    <head>
+        <script src="/socket.io/socket.io.js"></script>
+    </head>
+    <body>
+        <h1>Mira la consola</h1>
+        <script>
+            /* utilizando socket v2.x */
+            // var socket = io.connect('http://localhost:3000', {
+            //     /* con esto nos aseguramos que las conexiones sean siempre nuevas */
+            //     forceNew: true,
+            // });
+
+            /* Utilizando socket v4.x */
+            const socket = io('ws://localhost:3000');
+            socket.on('message', (data) => {
+                console.log(data);
+            });
+        </script>
+    </body>
+</html>
