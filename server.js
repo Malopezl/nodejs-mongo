@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const server = require('http').Server(app);
 
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const socket = require('./socket');
 const db = require('./db');
@@ -10,6 +11,8 @@ require('dotenv').config({ path: './.env' });
 
 /* Conexion a la base de datos */
 db(process.env.DB_CONNECT);
+
+app.use(cors());
 
 /* Codificacion */
 app.use(bodyParser.json());
