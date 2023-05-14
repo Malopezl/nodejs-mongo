@@ -25,5 +25,5 @@ router(app);
 app.use('/app', express.static('public'));
 
 server.listen(process.env.APP_PORT, () => {
-    console.log(`La aplicacion esta escuchando en http://localhost:${process.env.APP_PORT}`);
+    console.log(`La aplicacion esta escuchando en ${process.env.HOST}`);
 });
